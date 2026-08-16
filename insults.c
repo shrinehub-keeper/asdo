@@ -34,7 +34,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * The final four entries in the pool (marked "asdo-specific insults"
+ * The final three entries in the pool (marked "asdo-specific insults"
  * below) are original to this file and covered by the GPLv2 grant
  * above, same as the rest of the file.
  */
@@ -129,8 +129,7 @@ static const char *insults[] = {
 	"I'm very sorry, but I'm not allowed to argue unless you've paid.",
 
 	/* asdo-specific insults */
-	"That's no good! Wrong password!",
-	"I am the ultimate one... and you can't even remember your password.",
+	"That's no good!",
 	"Chitty chitty chit chat... chit chat.",
 	"alr brother add [core] to /etc/pacman.conf and pacman -S systemd if u "
 	    "really are that dumb",
