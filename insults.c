@@ -1,6 +1,27 @@
 /*
  * Copyright (c) 2026 asdo contributors
  *
+ * This file, except for the insults[] string literals noted below, is
+ * free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License as published by the Free
+ * Software Foundation; either version 2 of the License, or (at your
+ * option) any later version. See LICENSE.GPLv2 in the asdo source
+ * tree, or <https://www.gnu.org/licenses/>, for the full license text.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ * ---
+ *
+ * The bulk of the insults[] pool below is reproduced from the
+ * "insults" plugin of the sudo project (plugins/sudoers/ins_classic.h,
+ * ins_csops.h, ins_goons.h, ins_2001.h and ins_python.h), which is
+ * Copyright (c) 1996-2004 Todd C. Miller <Todd.Miller@sudo.ws> and
+ * distributed under the following ISC license (see LICENSE in the
+ * asdo source tree for the identical license covering the rest of
+ * the original OpenDoas codebase):
+ *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
@@ -13,11 +34,9 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
- * The bulk of the insult pool below is reproduced from the "insults"
- * plugin of the sudo project (plugins/sudoers/ins_classic.h,
- * ins_csops.h, ins_goons.h, ins_2001.h and ins_python.h), which is
- * Copyright (c) 1996-2004 Todd C. Miller <Todd.Miller@sudo.ws> and
- * distributed under the ISC license reproduced above.
+ * The final four entries in the pool (marked "asdo-specific insults"
+ * below) are original to this file and covered by the GPLv2 grant
+ * above, same as the rest of the file.
  */
 
 #include "config.h"

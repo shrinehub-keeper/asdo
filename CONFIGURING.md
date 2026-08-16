@@ -7,6 +7,11 @@ password prompt / error message. Every existing `doas.conf` rule and option
 exactly as it does upstream — see `doas.conf(5)` for those. This document
 only covers what `asdo` adds.
 
+*This document is Copyright (c) 2026 asdo contributors, licensed under
+the GNU General Public License v2 (or later) — see `LICENSE.GPLv2`.
+The underlying OpenDoas project it documents remains ISC-licensed —
+see `LICENSE`.*
+
 ## Config file location
 
 `asdo` reads its configuration from `/etc/asdo.conf`. If that file does not
