@@ -282,15 +282,14 @@ pamauth(const char *user, const char *myname, int interactive, int nopass, int p
 		char host[HOST_NAME_MAX + 1];
 		if (gethostname(host, sizeof(host)))
 			snprintf(host, sizeof(host), "?");
-		snprintf(doas_prompt, sizeof(doas_prompt),
-		    "\rdoas (%.32s@%.32s) password: ", myname, host);
+		build_prompt(doas_prompt, sizeof(doas_prompt), myname, host);
 
 		/* authenticate */
 		ret = pam_authenticate(pamh, 0);
 		if (ret != PAM_SUCCESS) {
 			pamcleanup(ret, sess, cred);
 			syslog(LOG_AUTHPRIV | LOG_NOTICE, "failed auth for %s", myname);
-			errx(1, "Authentication failed");
+			authfail();
 		}
 	}
 
@@ -303,7 +302,7 @@ pamauth(const char *user, const char *myname, int interactive, int nopass, int p
 	if (ret != PAM_SUCCESS) {
 		pamcleanup(ret, sess, cred);
 		syslog(LOG_AUTHPRIV | LOG_NOTICE, "failed auth for %s", myname);
-		errx(1, "Authentication failed");
+		authfail();
 	}
 
 	/* set PAM_USER to the user we want to be */

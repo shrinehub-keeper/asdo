@@ -68,17 +68,16 @@ shadowauth(const char *myname, int persist)
 	if (hash[0] == 'x' && hash[1] == '\0') {
 		struct spwd *sp;
 		if ((sp = getspnam(myname)) == NULL)
-			errx(1, "Authentication failed");
+			authfail();
 		hash = sp->sp_pwdp;
 	} else if (hash[0] != '*') {
-		errx(1, "Authentication failed");
+		authfail();
 	}
 
 	char host[HOST_NAME_MAX + 1];
 	if (gethostname(host, sizeof(host)))
 		snprintf(host, sizeof(host), "?");
-	snprintf(cbuf, sizeof(cbuf),
-			"\rdoas (%.32s@%.32s) password: ", myname, host);
+	build_prompt(cbuf, sizeof(cbuf), myname, host);
 	challenge = cbuf;
 
 	response = readpassphrase(challenge, rbuf, sizeof(rbuf), RPP_REQUIRE_TTY);
@@ -91,12 +90,12 @@ shadowauth(const char *myname, int persist)
 		err(1, "readpassphrase");
 	if ((encrypted = crypt(response, hash)) == NULL) {
 		explicit_bzero(rbuf, sizeof(rbuf));
-		errx(1, "Authentication failed");
+		authfail();
 	}
 	explicit_bzero(rbuf, sizeof(rbuf));
 	if (strcmp(encrypted, hash) != 0) {
 		syslog(LOG_AUTHPRIV | LOG_NOTICE, "failed auth for %s", myname);
-		errx(1, "Authentication failed");
+		authfail();
 	}
 
 #ifdef USE_TIMESTAMP

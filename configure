@@ -557,5 +557,6 @@ else
 fi
 
 printf '#define DOAS_CONF "%s/doas.conf"\n' "${SYSCONFDIR}" >>$CONFIG_H
+printf '#define ASDO_CONF "%s/asdo.conf"\n' "${SYSCONFDIR}" >>$CONFIG_H
 
 printf '\n#endif /* CONFIG_H */\n' >>$CONFIG_H

@@ -31,6 +31,14 @@ extern int parse_errors;
 
 extern const char *formerpath;
 
+/* asdo additions: global config settings parsed from asdo.conf/doas.conf */
+extern int insults_enabled;
+extern const char *custom_prompt;
+extern const char *custom_prompt_err;
+
+void __dead authfail(void);
+void build_prompt(char *buf, size_t bufsz, const char *user, const char *host);
+
 struct passwd;
 
 char **prepenv(const struct rule *, const struct passwd *,

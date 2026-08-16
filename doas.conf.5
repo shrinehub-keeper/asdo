@@ -94,6 +94,19 @@ alone means that command must be run without any arguments.
 The last matching rule determines the action taken.
 If no rule matches, the action is denied.
 .Pp
+.Nm
+also accepts the global directives
+.Ic insults on Ns | Ns Ic off ,
+.Ic prompt Ar text
+and
+.Ic prompt_err Ar text ,
+which are specific to the
+.Sy asdo
+fork of OpenDoas.
+See
+.Pa CONFIGURING.md
+in the asdo source tree for details.
+.Pp
 Comments can be put anywhere in the file using a hash mark
 .Pq Sq # ,
 and extend to the end of the current line.

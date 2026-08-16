@@ -76,6 +76,7 @@ arraylen(const char **arr)
 
 %token TPERMIT TDENY TAS TCMD TARGS
 %token TNOPASS TNOLOG TPERSIST TKEEPENV TSETENV
+%token TINSULTS TPROMPT TPROMPTERR
 %token TSTRING
 
 %%
@@ -83,8 +84,24 @@ arraylen(const char **arr)
 grammar:	/* empty */
 		| grammar '\n'
 		| grammar rule '\n'
+		| grammar setting '\n'
 		| error '\n'
 		;
+
+setting:	TINSULTS TSTRING {
+			if (strcmp($2.str, "on") == 0)
+				insults_enabled = 1;
+			else if (strcmp($2.str, "off") == 0)
+				insults_enabled = 0;
+			else {
+				yyerror("insults must be 'on' or 'off'");
+				YYERROR;
+			}
+		} | TPROMPT TSTRING {
+			custom_prompt = $2.str;
+		} | TPROMPTERR TSTRING {
+			custom_prompt_err = $2.str;
+		} ;
 
 rule:		action ident target cmd {
 			struct rule *r;
@@ -221,6 +238,9 @@ static struct keyword {
 	{ "persist", TPERSIST },
 	{ "keepenv", TKEEPENV },
 	{ "setenv", TSETENV },
+	{ "insults", TINSULTS },
+	{ "prompt", TPROMPT },
+	{ "prompt_err", TPROMPTERR },
 };
 
 int

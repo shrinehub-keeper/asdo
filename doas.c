@@ -152,6 +152,20 @@ permit(uid_t uid, gid_t *groups, int ngroups, const struct rule **lastr,
 	return (*lastr)->action == PERMIT;
 }
 
+/*
+ * asdo reads its rules from /etc/asdo.conf, falling back to
+ * /etc/doas.conf (the OpenDoas default) if asdo.conf doesn't exist.
+ */
+static const char *
+default_confpath(void)
+{
+	struct stat sb;
+
+	if (stat(ASDO_CONF, &sb) == 0)
+		return ASDO_CONF;
+	return DOAS_CONF;
+}
+
 static void
 parseconfig(const char *filename, int checkperms)
 {
@@ -330,7 +344,7 @@ main(int argc, char **argv)
 	if (geteuid())
 		errx(1, "not installed setuid");
 
-	parseconfig(DOAS_CONF, 1);
+	parseconfig(default_confpath(), 1);
 
 	/* cmdline is used only for logging, no need to abort on truncate */
 	(void)strlcpy(cmdline, argv[0], sizeof(cmdline));
