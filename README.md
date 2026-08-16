@@ -1,5 +1,7 @@
 # OpenDoas: a portable version of OpenBSD's `doas` command
 
+scroll down to the bottom for `asdo` specific info.
+
 [`doas`](https://en.wikipedia.org/wiki/Doas) is a minimal replacement for the venerable `sudo`. It was
 initially [written by Ted Unangst](http://www.tedunangst.com/flak/post/doas)
 of the OpenBSD project to provide 95% of the features of `sudo` with a
@@ -62,3 +64,7 @@ similar to `sudo`.
 
 See the comment block in `timestamp.c` for an in-depth description on how
 timestamps are created and checked to be as safe as possible.
+
+# `asdo`
+
+This is just OpenDoas with sudo insults and prompt changing in `/etc/asdo.conf` (or `/etc/doas.conf`). All of (Open)Doas's original config options are unchanged. Only `prompt`, `prompt_err`, and `insults` are added. See CONFIGURING.md in the root of this repo for configuration steps.
