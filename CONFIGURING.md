@@ -38,7 +38,7 @@ prompt_err "Sorry, wrong password."
 Default: `off`.
 
 When enabled, a random insult is printed to stderr instead of the normal
-`Authentication failed` message whenever authentication fails (wrong
+`Incorrect password` message whenever authentication fails (wrong
 password, locked/invalid account, etc). Like doas/OpenDoas, `asdo` only ever
 makes a single authentication attempt per invocation — there is no retry
 loop, so at most one insult is printed per run, and the process still exits
@@ -58,13 +58,13 @@ Overrides the password prompt text. Two placeholders are expanded:
 | `%h`        | the local hostname        |
 | `%%`        | a literal `%`             |
 
-If omitted, the prompt defaults to the standard doas prompt,
-`doas (%u@%h) password: `.
+If omitted, the prompt defaults to the standard asdo prompt,
+`asdo (%u@%h) password: `.
 
 ### `prompt_err "text"`
 
 Overrides the message printed on authentication failure when `insults` is
-`off` (or hasn't fired). If omitted, the standard `Authentication failed`
+`off` (or hasn't fired). If omitted, the standard `Incorrect password`
 message is used. This directive has no effect when `insults on` is set —
 insults take priority.
 

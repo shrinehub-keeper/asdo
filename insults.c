@@ -152,7 +152,7 @@ pick_insult(void)
 
 /*
  * Called whenever authentication fails, in place of the plain
- * "Authentication failed" message doas normally exits with.
+ * "Incorrect password" message asdo normally exits with.
  * doas/asdo only ever makes one authentication attempt, so this
  * always ends in exit(1), same as upstream OpenDoas.
  */
@@ -170,7 +170,7 @@ authfail(void)
 	if (msg && *msg)
 		errx(1, "%s", msg);
 
-	errx(1, "Authentication failed");
+	errx(1, "Incorrect password");
 }
 
 /*
@@ -230,7 +230,7 @@ expand_prompt(char *buf, size_t bufsz, const char *tmpl, const char *user,
 /*
  * Build the password prompt into buf, honoring (in priority order)
  * the ASDO_PS1 environment variable, the "prompt" config directive,
- * and finally the standard doas prompt.
+ * and finally the standard asdo prompt.
  */
 void
 build_prompt(char *buf, size_t bufsz, const char *user, const char *host)
@@ -241,7 +241,7 @@ build_prompt(char *buf, size_t bufsz, const char *user, const char *host)
 	if (!tmpl || !*tmpl)
 		tmpl = custom_prompt;
 	if (!tmpl || !*tmpl)
-		tmpl = "\rdoas (%u@%h) password: ";
+		tmpl = "\rasdo (%u@%h) password: ";
 
 	expand_prompt(buf, bufsz, tmpl, user, host);
 }

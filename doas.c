@@ -42,7 +42,7 @@
 static void __dead
 usage(void)
 {
-	fprintf(stderr, "usage: doas [-Lns] [-C config] [-u user]"
+	fprintf(stderr, "usage: asdo [-Lns] [-C config] [-u user]"
 	    " command [args]\n");
 	exit(1);
 }
@@ -175,7 +175,7 @@ parseconfig(const char *filename, int checkperms)
 
 	yyfp = fopen(filename, "r");
 	if (!yyfp)
-		err(1, checkperms ? "doas is not enabled, %s" :
+		err(1, checkperms ? "asdo is not enabled, %s" :
 		    "could not open config file %s", filename);
 
 	if (checkperms) {
@@ -274,7 +274,7 @@ main(int argc, char **argv)
 	const char *cwd;
 	char **envp;
 
-	setprogname("doas");
+	setprogname("asdo");
 
 	closefrom(STDERR_FILENO + 1);
 
