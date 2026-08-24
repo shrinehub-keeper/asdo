@@ -315,6 +315,21 @@ check_func "setprogname" "$src" || {
 }
 
 #
+# Check for program_invocation_short_name/program_invocation_name
+# (glibc). On glibc, err(3)/warn(3) read program_invocation_short_name
+# directly, not __progname, so the libopenbsd/progname.c setprogname()
+# fallback needs this to make err/warn output honor setprogname() at all.
+#
+src='
+#include <errno.h>
+int main(void) {
+	program_invocation_short_name = "x";
+	program_invocation_name = "x";
+	return 0;
+}'
+check_func "program_invocation_short_name" "$src"
+
+#
 # Check for readpassphrase().
 #
 src='
@@ -557,5 +572,6 @@ else
 fi
 
 printf '#define DOAS_CONF "%s/doas.conf"\n' "${SYSCONFDIR}" >>$CONFIG_H
+printf '#define ASDO_CONF "%s/asdo.conf"\n' "${SYSCONFDIR}" >>$CONFIG_H
 
 printf '\n#endif /* CONFIG_H */\n' >>$CONFIG_H

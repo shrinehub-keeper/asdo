@@ -102,6 +102,25 @@ Execute the command as
 .Ar user .
 The default is root.
 .El
+.Sh ENVIRONMENT
+.Bl -tag -width ASDO_ERRXX
+.It Ev ASDO_PS1
+Overrides the password prompt, taking priority over the
+.Ic prompt
+directive in
+.Xr doas.conf 5 .
+Specific to the
+.Sy asdo
+fork of OpenDoas.
+.It Ev ASDO_ERR
+Overrides the authentication failure message, taking priority over the
+.Ic prompt_err
+directive in
+.Xr doas.conf 5 .
+Specific to the
+.Sy asdo
+fork of OpenDoas.
+.El
 .Sh EXIT STATUS
 .Ex -std doas
 It may fail for one of the following reasons:

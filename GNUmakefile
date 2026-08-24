@@ -1,7 +1,7 @@
 PROG=	doas
 MAN=	doas.1 doas.conf.5
 
-SRCS=	parse.y doas.c env.c
+SRCS=	parse.y doas.c env.c insults.c
 
 include config.mk
 

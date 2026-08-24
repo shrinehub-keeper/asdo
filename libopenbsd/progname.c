@@ -67,4 +67,16 @@ setprogname(const char *progname)
 		__progname = progname;
 	else
 		__progname = last_slash + 1;
+
+#if defined(HAVE_PROGRAM_INVOCATION_SHORT_NAME)
+	/*
+	 * On glibc, err(3)/warn(3) print program_invocation_short_name,
+	 * derived from argv[0] at process start -- not __progname, and
+	 * not anything getprogname(3) callers see. Without this, a
+	 * setprogname() call has no effect on err/warn output at all,
+	 * regardless of what __progname is set to above.
+	 */
+	program_invocation_short_name = (char *)__progname;
+	program_invocation_name = (char *)progname;
+#endif
 }

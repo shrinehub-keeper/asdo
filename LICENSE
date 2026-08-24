@@ -17,3 +17,10 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 Additional bits copyright of their respective authors, see individual
 files for details.
+
+This license (the ISC license above) covers the original OpenDoas
+codebase and the sudo-derived insult strings quoted within it (see
+insults.c, copyright Todd C. Miller). It does not apply to asdo's own
+new additions, which are licensed separately: see LICENSE.GPLv2 and
+the header of each new file (CONFIGURING.md, PKGBUILD, and the
+non-quoted code in insults.c) for details.
