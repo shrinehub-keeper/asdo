@@ -67,4 +67,8 @@ timestamps are created and checked to be as safe as possible.
 
 # `asdo`
 
-This is just OpenDoas with sudo insults and prompt changing in `/etc/asdo.conf` (or `/etc/doas.conf`). All of (Open)Doas's original config options are unchanged. Only `prompt`, `prompt_err`, and `insults` are added. See CONFIGURING.md in the root of this repo for configuration steps.
+This is just OpenDoas with sudo insults and prompt changing in `/etc/asdo.conf` (or `/etc/doas.conf`). All of (Open)Doas's original config options are unchanged. Only `prompt`, `prompt_err`, and `insults` are added. See CONFIGURING.md in the root of this repo for configuration steps. 
+
+### NOTE 
+
+Use `paru -B ./PKGBUILD` or `yay -Bi ./PKGBUILD` so the `sudo` shim is also included, plain `makepkg -si` will not work unless you remove `'doas-sudo-shim'` from `depend()` in the PKGBUILD.
