@@ -19,9 +19,15 @@ source=("$pkgname::git+${url}.git")
 sha256sums=('SKIP')
 
 pkgver() {
-	cd "$pkgname"
-	git describe --long --tags 2>/dev/null | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' ||
-		printf 'r%s.%s' "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+  cd "$srcdir/$pkgname"
+  if git describe --long --tags >/dev/null 2>&1; then
+    git describe --long --tags \
+      | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+  else
+    printf "0.r%s.%s" \
+      "$(git rev-list --count HEAD)" \
+      "$(git rev-parse --short HEAD)"
+  fi
 }
 
 build() {
