@@ -71,4 +71,4 @@ This is just OpenDoas with sudo insults and prompt changing in `/etc/asdo.conf` 
 
 ### NOTE 
 
-Use `paru -B ./PKGBUILD` or `yay -Bi ./PKGBUILD` so the `sudo` shim is also included, plain `makepkg -si` will not work unless you remove `'doas-sudo-shim'` from `depend()` in the PKGBUILD.
+Use `paru -B ./PKGBUILD` or `yay -Bi ./PKGBUILD`, if you want a `sudo` shim (recommended to make the switch easier) plain `makepkg -si` will work but no `sudo` shim (still fine if you're already used to typing `doas`)
