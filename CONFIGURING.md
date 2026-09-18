@@ -1,5 +1,9 @@
 # Configuring asdo
 
+### NOTE
+
+`asdo` now ships with a default config so the user isn't locked out (if OpenDoas wasn't installed/configured before), so unless you wanna tweak some stuff this is useless.
+
 `asdo` is [OpenDoas](https://github.com/Duncaen/OpenDoas) with a few small
 additions on top: insults on failed authentication, and a customizable
 password prompt / error message. Every existing `doas.conf` rule and option
@@ -8,7 +12,7 @@ exactly as it does upstream — see `doas.conf(5)` for those. This document
 only covers what `asdo` adds.
 
 *This document is Copyright (c) 2026 asdo contributors, licensed under
-the GNU General Public License v2 (or later) — see `LICENSE.GPLv2`.
+the GNU General Public License v2 only — see `LICENSE.GPLv2`.
 The underlying OpenDoas project it documents remains ISC-licensed —
 see `LICENSE`.*
 
