@@ -68,10 +68,12 @@ shadowauth(const char *myname, int persist)
 	if (hash[0] == 'x' && hash[1] == '\0') {
 		struct spwd *sp;
 		if ((sp = getspnam(myname)) == NULL)
-			authfail();
+			errx(1, "cannot read the shadow entry for %s "
+			    "(is asdo installed setuid root?)", myname);
 		hash = sp->sp_pwdp;
 	} else if (hash[0] != '*') {
-		authfail();
+		errx(1, "%s has no usable password hash in the passwd "
+		    "database", myname);
 	}
 
 	char host[HOST_NAME_MAX + 1];

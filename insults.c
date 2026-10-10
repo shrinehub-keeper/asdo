@@ -161,14 +161,19 @@ authfail(void)
 {
 	const char *msg;
 
-	if (insults_enabled)
-		errx(1, "%s", pick_insult());
+	/* insults and user-supplied text are shown bare, without "asdo: " */
+	if (insults_enabled) {
+		fprintf(stderr, "%s\n", pick_insult());
+		exit(1);
+	}
 
 	msg = getenv("ASDO_ERR");
 	if (!msg || !*msg)
 		msg = custom_prompt_err;
-	if (msg && *msg)
-		errx(1, "%s", msg);
+	if (msg && *msg) {
+		fprintf(stderr, "%s\n", msg);
+		exit(1);
+	}
 
 	errx(1, "Incorrect password");
 }

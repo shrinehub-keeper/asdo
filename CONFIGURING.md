@@ -41,7 +41,8 @@ prompt_err "Sorry, wrong password."
 
 Default: `off`.
 
-When enabled, a random insult is printed to stderr instead of the normal
+When enabled, a random insult is printed to stderr (bare, without the
+`asdo:` prefix) instead of the normal
 `Incorrect password` message whenever authentication fails (wrong
 password, locked/invalid account, etc). Like doas/OpenDoas, `asdo` only ever
 makes a single authentication attempt per invocation — there is no retry
@@ -69,7 +70,8 @@ If omitted, the prompt defaults to the standard asdo prompt,
 
 Overrides the message printed on authentication failure when `insults` is
 `off` (or hasn't fired). If omitted, the standard `Incorrect password`
-message is used. This directive has no effect when `insults on` is set —
+message is used. The text is printed exactly as written, without the
+`asdo:` prefix. This directive has no effect when `insults on` is set —
 insults take priority.
 
 ## Environment variable overrides
@@ -81,7 +83,8 @@ over the config directives above:
 - `ASDO_PS1` — overrides the password prompt (same `%u` / `%h` / `%%`
   placeholders as `prompt`).
 - `ASDO_ERR` — overrides the authentication failure message (same as
-  `prompt_err`; still overridden by `insults on`).
+  `prompt_err`, including being printed without the `asdo:` prefix; still
+  overridden by `insults on`).
 
 ```
 $ ASDO_PS1='gimme the secret, %u: ' asdo whoami
@@ -111,3 +114,31 @@ of a config line, alongside the existing `permit`/`deny`/`as`/`cmd`/`args`/
 happens to collide with one of these words needs to be expressed
 differently (e.g. via its numeric uid/gid) — the same limitation that
 already applies to the original keywords in upstream doas.
+
+## PAM setup
+
+If `asdo` was built with PAM (the default on Arch/Artix), it authenticates
+through the PAM service named **`doas`** — that is, `/etc/pam.d/doas` — not
+`/etc/pam.d/asdo`. The name is kept so an existing OpenDoas setup keeps
+working unchanged.
+
+Uninstalling the `opendoas`/`doas` package usually deletes that file. Without
+it, PAM silently falls back to `/etc/pam.d/other`, which on Arch/Artix is
+`pam_deny`: every attempt is refused before any password prompt appears.
+`asdo` reports this as:
+
+```
+asdo: PAM refused authentication before asking for a password (...); check /etc/pam.d/doas
+```
+
+To fix it, recreate the file, for example (Arch/Artix):
+
+```
+# /etc/pam.d/doas
+auth      include  system-auth
+account   include  system-auth
+session   include  system-auth
+```
+
+This message takes priority over `insults on`: a broken PAM setup is never
+reported as an insult or as "Incorrect password".
