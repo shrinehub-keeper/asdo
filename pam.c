@@ -48,6 +48,7 @@
 
 static pam_handle_t *pamh = NULL;
 static char doas_prompt[128];
+static int prompted = 0;
 static sig_atomic_t volatile caught_signal = 0;
 
 static void
@@ -70,6 +71,7 @@ pamprompt(const char *msg, int echo_on, int *ret)
 	else
 		prompt = msg;
 
+	prompted = 1;
 	pass = readpassphrase(prompt, buf, sizeof(buf), flags);
 	if (!pass)
 		*ret = PAM_CONV_ERR;
@@ -287,8 +289,22 @@ pamauth(const char *user, const char *myname, int interactive, int nopass, int p
 		/* authenticate */
 		ret = pam_authenticate(pamh, 0);
 		if (ret != PAM_SUCCESS) {
+			char why[128];
+
+			/*
+			 * PAM refused without ever asking for a password, so
+			 * "incorrect password" would be a lie: typically the
+			 * service file is missing and PAM fell back to
+			 * "other" (pam_deny), or a lockout module said no.
+			 */
+			snprintf(why, sizeof(why), "%s", pam_strerror(pamh, ret));
 			pamcleanup(ret, sess, cred);
-			syslog(LOG_AUTHPRIV | LOG_NOTICE, "failed auth for %s", myname);
+			syslog(LOG_AUTHPRIV | LOG_NOTICE, "failed auth for %s%s",
+			    myname, prompted ? "" : " (PAM refused before prompting)");
+			if (!prompted)
+				errx(1, "PAM refused authentication before asking "
+				    "for a password (%s); check /etc/pam.d/%s",
+				    why, PAM_SERVICE_NAME);
 			authfail();
 		}
 	}

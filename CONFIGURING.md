@@ -111,3 +111,31 @@ of a config line, alongside the existing `permit`/`deny`/`as`/`cmd`/`args`/
 happens to collide with one of these words needs to be expressed
 differently (e.g. via its numeric uid/gid) — the same limitation that
 already applies to the original keywords in upstream doas.
+
+## PAM setup
+
+If `asdo` was built with PAM (the default on Arch/Artix), it authenticates
+through the PAM service named **`doas`** — that is, `/etc/pam.d/doas` — not
+`/etc/pam.d/asdo`. The name is kept so an existing OpenDoas setup keeps
+working unchanged.
+
+Uninstalling the `opendoas`/`doas` package usually deletes that file. Without
+it, PAM silently falls back to `/etc/pam.d/other`, which on Arch/Artix is
+`pam_deny`: every attempt is refused before any password prompt appears.
+`asdo` reports this as:
+
+```
+asdo: PAM refused authentication before asking for a password (...); check /etc/pam.d/doas
+```
+
+To fix it, recreate the file, for example (Arch/Artix):
+
+```
+# /etc/pam.d/doas
+auth      include  system-auth
+account   include  system-auth
+session   include  system-auth
+```
+
+This message takes priority over `insults on`: a broken PAM setup is never
+reported as an insult or as "Incorrect password".
