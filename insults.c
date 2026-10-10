@@ -167,8 +167,11 @@ authfail(void)
 	msg = getenv("ASDO_ERR");
 	if (!msg || !*msg)
 		msg = custom_prompt_err;
-	if (msg && *msg)
-		errx(1, "%s", msg);
+	if (msg && *msg) {
+		/* user-supplied text is shown verbatim, without "asdo: " */
+		fprintf(stderr, "%s\n", msg);
+		exit(1);
+	}
 
 	errx(1, "Incorrect password");
 }

@@ -69,7 +69,8 @@ If omitted, the prompt defaults to the standard asdo prompt,
 
 Overrides the message printed on authentication failure when `insults` is
 `off` (or hasn't fired). If omitted, the standard `Incorrect password`
-message is used. This directive has no effect when `insults on` is set —
+message is used. The text is printed exactly as written, without the
+`asdo:` prefix. This directive has no effect when `insults on` is set —
 insults take priority.
 
 ## Environment variable overrides
@@ -81,7 +82,8 @@ over the config directives above:
 - `ASDO_PS1` — overrides the password prompt (same `%u` / `%h` / `%%`
   placeholders as `prompt`).
 - `ASDO_ERR` — overrides the authentication failure message (same as
-  `prompt_err`; still overridden by `insults on`).
+  `prompt_err`, including being printed without the `asdo:` prefix; still
+  overridden by `insults on`).
 
 ```
 $ ASDO_PS1='gimme the secret, %u: ' asdo whoami
