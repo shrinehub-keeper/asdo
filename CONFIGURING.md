@@ -41,7 +41,8 @@ prompt_err "Sorry, wrong password."
 
 Default: `off`.
 
-When enabled, a random insult is printed to stderr instead of the normal
+When enabled, a random insult is printed to stderr (bare, without the
+`asdo:` prefix) instead of the normal
 `Incorrect password` message whenever authentication fails (wrong
 password, locked/invalid account, etc). Like doas/OpenDoas, `asdo` only ever
 makes a single authentication attempt per invocation — there is no retry
